@@ -69,12 +69,14 @@
             transition: var(--transition);
             text-align: center;
             font-size: 1rem;
+            text-decoration: none;
         }
 
         .btn:hover {
             background-color: var(--primary-dark);
             transform: translateY(-3px);
             box-shadow: var(--shadow);
+            text-decoration: none;
         }
 
         .btn-secondary {
@@ -93,6 +95,9 @@
         header {
             background-color: var(--white);
             box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .navbar {
@@ -107,6 +112,7 @@
             font-size: 1.8rem;
             font-weight: 700;
             color: var(--primary);
+            text-decoration: none;
         }
 
         .logo span {
@@ -126,16 +132,21 @@
             font-weight: 500;
             position: relative;
             padding: 5px 0;
+            text-decoration: none;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         a {
             text-decoration: none;
-            color: var(--shadow);
-            
+            color: inherit;
         }
 
         .nav-links a:hover {
             color: var(--primary);
+            text-decoration: none;
         }
 
         .nav-links a::after {
@@ -160,6 +171,7 @@
             font-size: 1.5rem;
             color: var(--primary);
             cursor: pointer;
+            padding: 5px;
         }
 
         /* Main Content - Centered Layout */
@@ -214,7 +226,7 @@
             color: var(--dark);
         }
 
-        input, textarea {
+        input, textarea, select {
             width: 100%;
             padding: 14px;
             border: 1px solid #ddd;
@@ -222,9 +234,10 @@
             font-family: 'Poppins', sans-serif;
             font-size: 1rem;
             transition: var(--transition);
+            background-color: var(--white);
         }
 
-        input:focus, textarea:focus {
+        input:focus, textarea:focus, select:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.2);
@@ -247,6 +260,10 @@
         .form-footer a {
             color: var(--primary);
             font-weight: 500;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .form-footer a:hover {
@@ -295,6 +312,7 @@
             text-align: center;
             margin-bottom: 2rem;
             z-index: 1;
+            width: 100%;
         }
 
         .star-side-title h2 {
@@ -394,6 +412,11 @@
             opacity: 0.9;
         }
 
+        /* Hidden rating input */
+        #selectedRating {
+            display: none;
+        }
+
         /* Thank You Modal */
         .modal {
             display: none;
@@ -438,17 +461,19 @@
 
         .modal-content p {
             color: var(--gray);
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
         }
 
         .modal-actions {
             display: flex;
             gap: 1rem;
             justify-content: center;
+            margin-top: 1.5rem;
         }
 
         /* Already submitted message */
         .already-submitted {
+            display: none;
             text-align: center;
             padding: 4rem 2rem;
             background-color: var(--white);
@@ -471,7 +496,7 @@
 
         .already-submitted p {
             color: var(--gray);
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
             max-width: 500px;
             margin-left: auto;
             margin-right: auto;
@@ -490,6 +515,13 @@
             font-size: 0.9rem;
             color: var(--primary-dark);
             margin-bottom: 0.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .privacy-note p i {
+            margin-top: 3px;
         }
 
         .privacy-note p:last-child {
@@ -526,10 +558,25 @@
         .footer-links a {
             color: rgba(255, 255, 255, 0.8);
             transition: var(--transition);
+            text-decoration: none;
         }
 
         .footer-links a:hover {
             color: var(--secondary);
+            text-decoration: underline;
+        }
+
+        /* Rating required indicator */
+        .rating-required {
+            color: #dc3545;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .rating-required.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
         }
 
         /* Responsive */
@@ -566,6 +613,7 @@
             .rating-label {
                 margin-bottom: 5px;
                 text-align: center;
+                order: -1;
             }
             
             .stars-display {
@@ -578,6 +626,11 @@
             
             .star-option.selected {
                 transform: translateY(-5px) scale(1.05);
+            }
+
+            .modal-actions {
+                flex-direction: column;
+                align-items: center;
             }
         }
 
@@ -637,10 +690,6 @@
                 flex-wrap: wrap;
                 justify-content: center;
             }
-            
-            .modal-actions {
-                flex-direction: column;
-            }
         }
 
         @media (max-width: 480px) {
@@ -649,7 +698,7 @@
             }
             
             .modal-content {
-                padding: 2rem;
+                padding: 2rem 1.5rem;
             }
             
             .right-star-rating {
@@ -658,6 +707,13 @@
             
             .star-option {
                 max-width: 100%;
+                flex-direction: row;
+                text-align: left;
+            }
+            
+            .rating-label {
+                order: 0;
+                text-align: left;
             }
         }
     </style>
@@ -683,21 +739,21 @@
 
     <!-- Main Content -->
     <div class="main-content">
-        <div class="container center" >
+        <div class="container center">
             <!-- Already Submitted Message (Initially Hidden) -->
-            <div class="already-submitted" id="alreadySubmitted" ">
+            <div class="already-submitted" id="alreadySubmitted">
                 <i class="fas fa-check-circle"></i>
                 <h2>Thank You for Your Feedback!</h2>
                 <p>You've already submitted a review from this device. We appreciate your valuable feedback and will continue to use it to improve our services.</p>
                 <p>If you'd like to update your review or have additional feedback, please contact us directly.</p>
-                <div class="modal-actions" style="justify-content: center; margin-top: 2rem;">
+                <div class="modal-actions" style="margin-top: 2rem;">
                     <a href="index.html" class="btn"><i class="fas"></i> Return to Home</a>
                     <a href="index.html#appointment" class="btn btn-secondary"><i class="fas"></i> Book Appointment</a>
                 </div>
             </div>
 
             <!-- Review Form (Initially Visible) -->
-            <div id="reviewFormSection" style="width: 100%; display: flex; justify-content: center;">
+            <div id="reviewFormSection">
                 <div class="review-wrapper">
                     <!-- Left Side - Form -->
                     <div class="review-left">
@@ -715,6 +771,11 @@
                             <div class="form-group">
                                 <label for="message"><i class="fas fa-comment"></i> Your Review *</label>
                                 <textarea id="message" placeholder="Tell us about your experience with our nutrition services. What did you like? How did we help you achieve your health goals?" required></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label><i class="fas fa-star"></i> Your Rating *</label>
+                                <div class="rating-required" id="ratingRequired">Please select a rating</div>
                             </div>
                             
                             <div class="privacy-note">
@@ -820,10 +881,10 @@
             <p>Your feedback is incredibly valuable to us. We'll review your submission and publish it on our website shortly.</p>
             <p>We appreciate you taking the time to share your experience with NutriWell.</p>
             <div class="modal-actions">
-                <button class="btn" onclick="goToHomePage()">
+                <button class="btn" id="modalHomeBtn">
                     <i class="fas fa-home"></i> Return to Home
                 </button>
-                <button class="btn btn-secondary" onclick="goToAppointments()">
+                <button class="btn btn-secondary" id="modalAppointmentBtn">
                     <i class="fas fa-calendar-check"></i> Book Appointment
                 </button>
             </div>
@@ -847,76 +908,8 @@
         </div>
     </footer>
 
-    <!-- Firebase Script -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { 
-            getFirestore, 
-            collection, 
-            addDoc, 
-            serverTimestamp,
-            query,
-            where,
-            getDocs
-        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-        // Firebase Configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyA6ZTqlQxxKO9QDTXuK_1R0oQ5gZr_-2Vc",
-            authDomain: "eat-right-live-healthy.firebaseapp.com",
-            projectId: "eat-right-live-healthy",
-            storageBucket: "eat-right-live-healthy.firebasestorage.app",
-            messagingSenderId: "1082103302889",
-            appId: "1:1082103302889:web:4eccd9eb04485216d47e78"
-        };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        // Device fingerprint for single submission per device
-        function getDeviceFingerprint() {
-            const fingerprint = {
-                userAgent: navigator.userAgent,
-                language: navigator.language,
-                screenWidth: screen.width,
-                screenHeight: screen.height,
-                colorDepth: screen.colorDepth,
-                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
-            };
-            
-            const fingerprintString = JSON.stringify(fingerprint);
-            let hash = 0;
-            for (let i = 0; i < fingerprintString.length; i++) {
-                const char = fingerprintString.charCodeAt(i);
-                hash = ((hash << 5) - hash) + char;
-                hash = hash & hash;
-            }
-            return Math.abs(hash).toString(16);
-        }
-
-        // Check if this device has already submitted a review
-        async function checkPreviousSubmission() {
-            const deviceId = getDeviceFingerprint();
-            localStorage.setItem('nutriwell_device_id', deviceId);
-            
-            try {
-                const lastSubmission = localStorage.getItem('nutriwell_review_submitted');
-                if (lastSubmission === 'true') {
-                    return true;
-                }
-                
-                const reviewsRef = collection(db, 'reviews');
-                const q = query(reviewsRef, where('deviceId', '==', deviceId));
-                const querySnapshot = await getDocs(q);
-                
-                return !querySnapshot.empty;
-            } catch (error) {
-                console.error('Error checking previous submission:', error);
-                return false;
-            }
-        }
-
+    <!-- JavaScript -->
+    <script>
         // Rating data
         const ratingData = {
             1: {
@@ -958,6 +951,9 @@
                 ratingTitle.textContent = data.title + "!";
                 ratingDescription.textContent = data.description;
                 selectedRatingInput.value = rating;
+                
+                // Hide rating required message
+                document.getElementById('ratingRequired').classList.remove('show');
                 
                 // Show feedback with animation
                 feedbackDiv.classList.add('show');
@@ -1041,15 +1037,18 @@
             });
         });
 
+        // Modal button handlers
+        document.getElementById('modalHomeBtn').addEventListener('click', goToHomePage);
+        document.getElementById('modalAppointmentBtn').addEventListener('click', goToAppointments);
+
         // Initialize page
-        document.addEventListener('DOMContentLoaded', async () => {
+        document.addEventListener('DOMContentLoaded', () => {
             // Check if user has already submitted a review
-            const hasSubmitted = await checkPreviousSubmission();
+            const hasSubmitted = localStorage.getItem('nutriwell_review_submitted') === 'true';
             
             if (hasSubmitted) {
                 document.getElementById('reviewFormSection').style.display = 'none';
                 document.getElementById('alreadySubmitted').style.display = 'block';
-                return;
             }
             
             // Set up star rating interactions
@@ -1065,6 +1064,18 @@
                 e.preventDefault();
                 
                 const submitBtn = document.getElementById('submitBtn');
+                const rating = document.getElementById('selectedRating').value;
+                
+                // Validate rating
+                if (!rating) {
+                    document.getElementById('ratingRequired').classList.add('show');
+                    document.getElementById('ratingRequired').scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'center' 
+                    });
+                    return;
+                }
+                
                 const originalText = submitBtn.innerHTML;
                 
                 // Disable button to prevent multiple submissions
@@ -1075,25 +1086,9 @@
                     // Get form values
                     const name = document.getElementById('name').value.trim();
                     const message = document.getElementById('message').value.trim();
-                    const rating = document.getElementById('selectedRating').value;
-                    const deviceId = getDeviceFingerprint();
                     
-                    // Prepare review data
-                    const reviewData = {
-                        name,
-                        message,
-                        deviceId,
-                        approved: false,
-                        createdAt: serverTimestamp()
-                    };
-                    
-                    // Add rating if provided
-                    if (rating) {
-                        reviewData.rating = parseInt(rating);
-                    }
-                    
-                    // Save to Firebase
-                    await addDoc(collection(db, 'reviews'), reviewData);
+                    // Simulate submission (in a real app, this would be a fetch request)
+                    await new Promise(resolve => setTimeout(resolve, 1000));
                     
                     // Mark as submitted in localStorage
                     localStorage.setItem('nutriwell_review_submitted', 'true');
