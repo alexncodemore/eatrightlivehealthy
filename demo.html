@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dt. Nishita Satra · Eat Right Live Good</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #2A7A4B; --primary-dark: #1E5F38; --secondary: #E67E22;
+            --light: #F8FAF9; --dark: #1F2A3A; --gray: #5A6A7A; --light-gray: #EFF1F0;
+            --transition: all 0.3s ease;
+        }
+        body {
+            font-family: 'Poppins', sans-serif; line-height: 1.6; color: var(--dark);
+            background-color: var(--light); overflow-x: hidden;
+        }
+        h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 600; line-height: 1.3; }
+        .gradient-text {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+        .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        section { padding: 80px 0; position: relative; }
+
+        /* navigation */
+        #nav {
+            position: fixed; top: 0; left: 0; width: 100%; background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); z-index: 1000; padding: 15px 0; transition: var(--transition);
+        }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--secondary)); -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { text-decoration: none; color: var(--dark); font-weight: 500; transition: var(--transition); position: relative; }
+        .nav-links a:hover { color: var(--primary); }
+        .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background-color: var(--primary); transition: var(--transition); }
+        .nav-links a:hover::after { width: 100%; }
+        .mobile-menu-btn { display: none; font-size: 24px; background: none; border: none; cursor: pointer; color: var(--dark); }
+
+        /* hero */
+        #hero {
+            min-height: 100vh; display: flex; align-items: center;
+            background: linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.85)), url('https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover; background-position: center; margin-top: 70px;
+        }
+        .hero-content { max-width: 800px; text-align: center; margin: 0 auto; }
+        .hero-content h1 { font-size: 3.5rem; margin-bottom: 20px; }
+        .hero-content p { font-size: 1.2rem; margin-bottom: 30px; color: var(--gray); }
+        .hero-highlights { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 40px; }
+        .hero-highlight {
+            background: rgba(255, 255, 255, 0.9); padding: 15px 25px; border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); display: flex; align-items: center; gap: 10px; font-weight: 500;
+        }
+        .hero-highlight i { color: var(--primary); font-size: 1.2rem; }
+        .btn {
+            display: inline-block; padding: 14px 34px; background-color: var(--primary); color: white;
+            border: none; border-radius: 40px; font-weight: 600; text-decoration: none; transition: var(--transition);
+            cursor: pointer; font-size: 1rem;
+        }
+        .btn:hover { background-color: var(--primary-dark); transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15); }
+        .section-title { text-align: center; margin-bottom: 50px; }
+        .section-title h2 { font-size: 2.5rem; margin-bottom: 15px; }
+        .section-title p { font-size: 1.1rem; color: var(--gray); }
+
+        /* practice cards */
+        #practice { background-color: white; }
+        .practice-cards { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
+        .practice-card {
+            background-color: var(--light); border-radius: 20px; padding: 30px; width: 320px;
+            text-align: center; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.04); transition: var(--transition);
+            border: 1px solid rgba(42, 122, 75, 0.1);
+        }
+        .practice-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08); }
+        .practice-card i { font-size: 40px; margin-bottom: 20px; color: var(--primary); }
+
+        /* about */
+        .about-content { display: flex; align-items: center; gap: 50px; }
+        .about-img {
+            flex: 1; border-radius: 20px; overflow: hidden; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            background: #e0e7e0;
+        }
+        .about-img img { width: 100%; height: auto; display: block; transition: var(--transition); }
+        .about-img:hover img { transform: scale(1.02); }
+        .about-text { flex: 1; }
+        .about-text h3 { font-size: 2rem; margin-bottom: 10px; }
+        .about-text .subhead { font-size: 1.2rem; color: var(--primary); font-weight: 500; margin-bottom: 10px; }
+        .about-text p { margin-bottom: 15px; color: var(--gray); }
+        .institution-tags { display: flex; flex-wrap: wrap; gap: 12px; margin: 25px 0 20px; }
+        .institution-tag {
+            background: white; border: 1px solid var(--primary); color: var(--primary);
+            padding: 6px 18px; border-radius: 30px; font-size: 0.9rem; font-weight: 500;
+        }
+        .experience-stats {
+            display: flex; justify-content: space-around; flex-wrap: wrap; gap: 30px;
+            margin-top: 40px; text-align: center;
+        }
+        .stat-item { padding: 10px; }
+        .stat-number {
+            font-size: 3rem; font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            line-height: 1; display: inline-block;
+        }
+        .stat-text { font-size: 1.2rem; font-weight: 500; margin-top: 5px; }
+
+        /* specializations – updated per request (expanded) */
+        #specializations { background-color: var(--light-gray); }
+        .specializations-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .specialization-card {
+            background-color: white; border-radius: 20px; padding: 30px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+            transition: var(--transition); border: 1px solid rgba(0,0,0,0.02);
+        }
+        .specialization-card:hover { transform: translateY(-6px); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08); }
+        .specialization-card i { font-size: 40px; margin-bottom: 20px; color: var(--primary); }
+        .special-badge {
+            display: inline-block; background: var(--secondary); color: white; font-size: 0.75rem;
+            font-weight: 600; padding: 4px 12px; border-radius: 30px; margin-bottom: 15px;
+        }
+
+        /* reviews (unchanged, keep) */
+        #reviews { background: white; }
+        .reviews-container {
+            display: flex; gap: 30px; overflow-x: auto; padding: 20px 5px 30px;
+            scrollbar-width: thin; scrollbar-color: var(--primary) var(--light-gray);
+        }
+        .reviews-container::-webkit-scrollbar { height: 6px; }
+        .reviews-container::-webkit-scrollbar-thumb { background-color: var(--primary); border-radius: 10px; }
+        .review-card {
+            min-width: 350px; background-color: var(--light); border-radius: 20px; padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03); transition: var(--transition);
+        }
+        .review-card:hover { transform: translateY(-6px); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08); }
+        .stars { color: var(--secondary); margin-bottom: 15px; font-size: 1.1rem; }
+        .client-info { display: flex; align-items: center; margin-top: 20px; }
+        .client-img { width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-right: 15px; background: #ccc; }
+        .client-img img { width: 100%; height: 100%; object-fit: cover; }
+        .review-meta small { color: var(--gray); display: block; margin-top: 5px; }
+
+        /* BLOG SECTION REMOVED (as requested) */
+
+        /* contact – with clickable phone/email, embedded map */
+        #contact { background: white; }
+        .contact-container { display: flex; gap: 50px; }
+        .contact-info { flex: 1; }
+        .contact-form { flex: 1; }
+        .contact-item { display: flex; align-items: flex-start; margin-bottom: 30px; }
+        .contact-item i { font-size: 26px; color: var(--primary); margin-right: 20px; margin-top: 5px; }
+        /* clickable phone / email */
+        .contact-item a.contact-link {
+            color: var(--dark); text-decoration: none; border-bottom: 1px dotted transparent;
+            transition: border-color 0.2s;
+        }
+        .contact-item a.contact-link:hover { border-bottom: 1px dotted var(--primary); color: var(--primary); }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 6px; font-weight: 500; }
+        .form-group input,
+        .form-group textarea {
+            width: 100%; padding: 12px 15px; border: 1px solid #d0d9d4; border-radius: 12px;
+            font-family: 'Poppins', sans-serif; transition: var(--transition);
+        }
+        .form-group input:focus,
+        .form-group textarea:focus { outline: none; border-color: var(--primary); }
+
+        /* embedded map (exact location) + block styling */
+        .map-embed {
+            margin-top: 25px; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            border: 1px solid rgba(42,122,75,0.2);
+        }
+        .map-embed iframe {
+            width: 100%; height: 230px; border: 0; display: block;
+        }
+        .contact-details-highlight {
+            background: #EAF4EC; padding: 20px; border-radius: 16px; margin: 25px 0 10px;
+        }
+        .contact-details-highlight i { width: 28px; color: var(--primary); }
+
+        /* footer updated */
+        #footer {
+            background-color: var(--dark); color: #ddd; padding: 60px 0 30px;
+        }
+        .footer-content { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 40px; margin-bottom: 40px; }
+        .footer-column { flex: 1; min-width: 220px; }
+        .footer-column h3 { font-size: 1.4rem; margin-bottom: 20px; color: white; }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 10px; }
+        .footer-links a { color: #ccc; text-decoration: none; transition: var(--transition); }
+        .footer-links a:hover { color: var(--secondary); padding-left: 6px; }
+        .social-links { display: flex; gap: 15px; margin-top: 20px; }
+        .social-links a {
+            display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px;
+            background-color: rgba(255,255,255,0.08); border-radius: 50%; color: white; text-decoration: none; transition: var(--transition);
+        }
+        .social-links a:hover { background-color: var(--primary); transform: translateY(-3px); }
+        .copyright { text-align: center; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); color: #aaa; }
+
+        /* floating whatsapp – number updated */
+        .whatsapp-float {
+            position: fixed; bottom: 30px; right: 25px; background-color: #25D366; color: white;
+            width: 65px; height: 65px; border-radius: 50%; text-align: center; font-size: 32px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15); z-index: 100; display: flex; align-items: center; justify-content: center;
+            text-decoration: none; transition: all 0.25s ease; animation: float 5s ease-in-out infinite;
+        }
+        .whatsapp-float:hover { background-color: #128C7E; transform: scale(1.08); }
+        .whatsapp-float i { font-size: 38px; }
+        @keyframes float { 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-8px); } }
+
+        /* animations */
+        .section-float { transition: transform 0.6s ease, opacity 0.6s ease; }
+        .hidden { opacity: 0; transform: translateY(40px); }
+        .visible { opacity: 1; transform: translateY(0); }
+
+        /* responsive */
+        @media (max-width: 992px) {
+            .hero-content h1 { font-size: 2.8rem; }
+            .about-content { flex-direction: column; }
+            .contact-container { flex-direction: column; }
+        }
+        @media (max-width: 768px) {
+            .mobile-menu-btn { display: block; }
+            .nav-links {
+                position: fixed; top: 70px; left: 0; width: 100%; background: white; flex-direction: column;
+                padding: 25px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); transform: translateY(-150%);
+                opacity: 0; visibility: hidden; transition: all 0.4s ease;
+            }
+            .nav-links.active { transform: translateY(0); opacity: 1; visibility: visible; }
+            .hero-content h1 { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- nav -->
+    <div id="nav">
+        <div class="container nav-container">
+            <div class="logo">Eat Right Live Good</div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button>
+            <div class="nav-links" id="navLinks">
+                <a href="#hero">Home</a>
+                <a href="#practice">Expertise</a>
+                <a href="#about">About</a>
+                <a href="#specializations">Specializations</a>
+                <a href="#reviews">Stories</a>
+                <!-- blog link removed -->
+                <a href="#contact">Book</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- hero -->
+    <section id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="gradient-text">Dt. Nishita Satra</h1>
+                <p><strong>Certified Advanced Clinical Nutritionist & Diabetic Educator</strong> · 17+ years in oncology, cardiac & diabetes care · Transforming 10,000+ lives globally.</p>
+                <div class="hero-highlights">
+                    <div class="hero-highlight"><i class="fas fa-hospital"></i> Tata Cancer Centre · KEM · Asian Heart</div>
+                    <div class="hero-highlight"><i class="fas fa-leaf"></i> Cancer nutrition specialist</div>
+                    <div class="hero-highlight"><i class="fas fa-trophy"></i> Nutritional Society of India winner</div>
+                </div>
+                <a href="#contact" class="btn" style="margin-top: 40px;">Schedule a consultation</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- practice cards -->
+    <section id="practice" class="section-float">
+        <div class="container">
+            <div class="section-title">
+                <h2 class="gradient-text">Eat Right Live Good – cancer nutrition focus</h2>
+                <p>Private practice dedicated to supporting patients through chemotherapy, radiation, immunotherapy, and surgery</p>
+            </div>
+            <div class="practice-cards">
+                <div class="practice-card"><i class="fas fa-hand-holding-heart"></i><h3>Oncology nutrition</h3><p>Personalized plans to manage side effects, maintain strength, and improve outcomes during treatment.</p></div>
+                <div class="practice-card"><i class="fas fa-heart"></i><h3>Cardiometabolic care</h3><p>Expert management of diabetes, cardiovascular conditions, and lipid disorders.</p></div>
+                <div class="practice-card"><i class="fas fa-flask"></i><h3>Clinical trials</h3><p>Active contributor to supplement trials for leading nutraceutical companies.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- about (IDA included) -->
+    <section id="about" class="section-float">
+        <div class="container">
+            <div class="section-title">
+                <h2 class="gradient-text">About Dt. Nishita Satra</h2>
+                <p>17+ years at the forefront of clinical nutrition</p>
+            </div>
+            <div class="about-content">
+                <div class="about-img">
+                    <img src="image.png" alt="Dt. Nishita Satra">
+                </div>
+                <div class="about-text">
+                    <h3>Nishita Satra</h3>
+                    <div class="subhead">Advanced Clinical Nutritionist · CDE · IDA No: LM/02/2007/939</div>
+                    <p>With over 17+ years in clinical nutrition, I specialize in <strong>diabetes, cardiovascular diseases, and oncology nutrition</strong>, impacting over <strong>10,000 patients globally</strong>. As a Diabetic Educator and Certified Advanced Clinical Nutritionist, I've worked with renowned institutions such as <strong>Tata Cancer Centre, KEM Hospital, Asian Heart Institute, and Nair Hospital</strong>.</p>
+                    <p>Currently, I run a successful private practice, <strong>Eat Right Live Good</strong>, where I primarily focus on cancer care — supporting patients through chemotherapy, radiation, immunotherapy, and pre- and post-surgery stages.</p>
+                    <div class="institution-tags">
+                        <span class="institution-tag">Tata Cancer Centre</span>
+                        <span class="institution-tag">KEM Hospital</span>
+                        <span class="institution-tag">Asian Heart Institute</span>
+                        <span class="institution-tag">Nair Hospital</span>
+                    </div>
+                   <div class="experience-stats">
+                        <div class="stat-item"><span class="stat-number" id="statYears" data-target="17"></span><div class="stat-text">years experience</div></div>
+                        <div class="stat-item"><span class="stat-number" id="statPatients" data-target="10000">0</span><div class="stat-text">patients globally</div></div>
+                        <div class="stat-item"><span class="stat-number" id="statHospitals" data-target="4">0</span><div class="stat-text">renowned hospitals</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SPECIALIZATIONS – expanded with all requested keywords (Diabetes Educator, Kidney, Liver, Cardio, Obesity, PCOS, Cancer, Happy clients) -->
+    <section id="specializations" class="section-float">
+        <div class="container">
+            <div class="section-title">
+                <h2 class="gradient-text">Clinical specializations</h2>
+                <p>Comprehensive care – across the globe</p>
+            </div>
+            <div class="specializations-container">
+                <div class="specialization-card"><i class="fas fa-bolt"></i><span class="special-badge">CDE</span><h3>Diabetes Educator</h3><p>Expert insulin titration, glycemic control, prevention of complications – certified diabetes educator.</p></div>
+                <div class="specialization-card"><i class="fas fa-kidneys"></i><h3>Kidney & Liver</h3><p>Renal diets, hepatic disorders, pancreatitis – medical nutrition therapy for complex organ conditions.</p></div>
+                <div class="specialization-card"><i class="fas fa-heart-pulse"></i><h3>Cardio & Obesity</h3><p>Heart disease, dyslipidemia, post-MI rehab, weight management, metabolic syndrome.</p></div>
+                <div class="specialization-card"><i class="fas fa-ribbon"></i><h3>Cancer (Oncology)</h3><p>Chemo, radiation, immunotherapy support. Strength & immunity during treatment.</p></div>
+                <div class="specialization-card"><i class="fas fa-female"></i><h3>PCOS & Thyroid</h3><p>Hormonal balance, insulin resistance, fertility support through nutrition.</p></div>
+                <div class="specialization-card"><i class="fas fa-globe-asia"></i><h3>Happy clients worldwide</h3><p>Virtual consultations across India, UAE, USA, UK – personalized plans wherever you are.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- reviews unchanged (keep three testimonials) -->
+    <section id="reviews" class="section-float">
+        <div class="container">
+            <div class="section-title">
+                <h2 class="gradient-text">Patient stories</h2>
+                <p>Real experiences, genuine gratitude</p>
+            </div>
+            <div class="reviews-container">
+                <div class="review-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"Nishita completed Radiation therapy without any side effects. Thank you for supporting me throughout my cancer journey right from Surgery to Radiation. You're a real 🥰"</p>
+                    <div class="client-info"><div class="client-img"><img src="profile.png" alt="patient"></div><div><h4>Cancer Fighter</h4><small>A Journey of Strength</small></div></div>
+                </div>
+                <div class="review-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"My father-in-law suffered a severe accident that required cervical cord (C5,C6,C7) surgery. Initially bedridden, lost appetite. Everything changed when we met Nishita. Through video calls, she expertly guided us. Today he's using the washroom with help and even returning to office in a wheelchair. Staying in Guwahati and meeting her just over video call — the recovery is incredible. We're deeply grateful."</p>
+                    <div class="client-info"><div class="client-img"><img src="profile.png" alt="family"></div><div><h4>Spinal Surgery Survivor</h4><small>Guided Recovery</small></div></div>
+                </div>
+                <div class="review-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"I want to thank my dietitian for helping me heal during my journey with breast cancer. Her diet plans made a big difference during chemotherapy, keeping me strong and reducing side effects. I feel healthier now and truly believe her guidance played a key role in my recovery. <strong>STRONGER THAN</strong> ever."</p>
+                    <div class="client-info"><div class="client-img"><img src="profile.png" alt="breast cancer survivor"></div><div><h4>Breast Cancer Survivor.</h4><small>Stronger Than Ever</small></div></div>
+                </div>
+            </div>
+            <p style="text-align:center; margin-top:20px; color:var(--gray);">and many more stories of hope & healing...</p>
+        </div>
+    </section>
+
+    <!-- BLOG SECTION REMOVED entirely as requested -->
+
+    <!-- CONTACT with map embed, clickable phone/email, correct number and location -->
+    <section id="contact" class="section-float">
+        <div class="container">
+            <div class="section-title">
+                <h2 class="gradient-text">Book an appointment</h2>
+                <p>Take the first step toward personalized clinical nutrition</p>
+            </div>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <!-- address updated: B-5/6 Maurya Apartment, Raheja Township, Malad East -->
+                    <div class="contact-item"><i class="fas fa-map-pin"></i><div><h3>Eat Right Live Good clinic</h3><p><strong>B-5/6, Maurya Apartment, Raheja Township,<br>Malad (East), Mumbai - 400097</strong><br>Online consultations available worldwide</p></div></div>
+                    
+                    <!-- clickable phone & email with correct number 9082606279 and mailto -->
+                    <div class="contact-item"><i class="fas fa-phone-alt"></i><div><h3>Contact</h3>
+                        <p><a href="tel:+919082606279" class="contact-link"><i class="fas fa-phone"></i> +91 90826 06279</a> (WhatsApp available) <br>
+                        <a href="mailto:nishita@eatrightlivegood.in" class="contact-link"><i class="far fa-envelope"></i> nishita@eatrightlivegood.in</a></p>
+                    </div></div>
+
+                    <div class="contact-item"><i class="fas fa-clock"></i><div><h3>Consultation hours (IST)</h3><p>Mon–Fri 9am–7pm | Sat 10am–2pm<br>Emergency slots for oncology patients</p></div></div>
+
+                    <!-- embedded Google Map exact location (provided coordinates) -->
+                    <div class="map-embed">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3767.256122479948!2d72.8532811759439!3d19.18108468203439!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b6f1c8f8c6c3%3A0x8b8c6f1c8f8c6c3!2sRaheja%20Township%2C%20Malad%20East%2C%20Mumbai%2C%20Maharashtra%20400097!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                    <div class="contact-details-highlight">
+                        <p><i class="fas fa-check-circle"></i> IDA LM/02/2007/939 · IAPEN member</p>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form id="appointmentForm">
+                        <div class="form-group"><label>Full name *</label><input type="text" required></div>
+                        <div class="form-group"><label>Email *</label><input type="email" required></div>
+                        <div class="form-group"><label>Contact number *</label><input type="tel" required></div>
+                        <div class="form-group"><label>Message / Concern</label><textarea rows="4" placeholder="e.g., stage 2 breast cancer on chemo, diabetes, kidney/liver disorder, PCOS ..."></textarea></div>
+                        <button type="submit" class="btn" style="width:100%;">Request appointment</button>
+                        <p style="font-size:0.85rem; margin-top:12px; color:var(--gray);">We'll confirm availability within 24h.</p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- footer with updated address and IDA -->
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column"><h3 class="gradient-text">Eat Right Live Good</h3><p>Dt. Nishita Satra · Certified Advanced Clinical Nutritionist · Diabetes Educator · IDA LM/02/2007/939 · 17+ years · Tata Cancer Centre, KEM, Asian Heart, Nair Hospital affiliations.</p><div class="social-links"><a href="#"><i class="fab fa-linkedin-in"></i></a><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-facebook-f"></i></a></div></div>
+                <div class="footer-column"><h3>Explore</h3><ul class="footer-links"><li><a href="#about">About</a></li><li><a href="#specializations">Specializations</a></li><li><a href="#reviews">Stories</a></li><li><a href="#contact">Contact</a></li></ul></div>
+                <div class="footer-column"><h3>Clinical focus</h3><ul class="footer-links"><li>Oncology nutrition</li><li>Diabetes education</li><li>Cardiac rehab</li><li>Kidney / Liver</li><li>Obesity / PCOS</li></ul></div>
+                <div class="footer-column"><h3>Clinic address</h3><p>B-5/6, Maurya Apartment,<br>Raheja Township, Malad East,<br>Mumbai - 400097</p></div>
+            </div>
+            <div class="copyright"><p>© 2025 Eat Right Live Good – Advanced Clinical Nutrition · IDA LM/02/2007/939 · Member IAPEN · All rights reserved</p></div>
+        </div>
+    </footer>
+
+    <!-- floating whatsapp with updated number (9082606279) and default message -->
+    <a href="https://wa.me/919082606279?text=Hi%20Dt.%20Nishita%2C%20I'd%20like%20to%20know%20more%20about%20your%20nutrition%20consultations." class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // mobile menu
+        const menuBtn = document.getElementById('mobileMenuBtn');
+        const nav = document.getElementById('navLinks');
+        menuBtn?.addEventListener('click', ()=>{
+            nav.classList.toggle('active');
+            menuBtn.innerHTML = nav.classList.contains('active') ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+        document.querySelectorAll('.nav-links a').forEach(l=> l.addEventListener('click', ()=>{
+            nav.classList.remove('active');
+            if(menuBtn) menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+        }));
+
+        // smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
+            anchor.addEventListener('click', function(e){
+                e.preventDefault();
+                const id = this.getAttribute('href'); if(id==='#') return;
+                const el = document.querySelector(id); if(el) window.scrollTo({top:el.offsetTop-80, behavior:'smooth'});
+            });
+        });
+
+        // reveal on scroll
+        const sections = document.querySelectorAll('.section-float');
+        const obs = new IntersectionObserver((entries)=>{
+            entries.forEach(e=> {
+                if(e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    e.target.classList.remove('hidden');
+                }
+            });
+        }, {threshold:0.1});
+        sections.forEach(s=> { s.classList.add('hidden'); obs.observe(s); });
+
+        // nav shrink
+        window.addEventListener('scroll', ()=>{
+            document.getElementById('nav').style.padding = window.scrollY>80 ? '8px 0' : '15px 0';
+        });
+
+        // form alert
+        document.getElementById('appointmentForm')?.addEventListener('submit', (e)=>{
+            e.preventDefault(); alert('Thank you! Your request has been sent. We will reply within 24h.'); e.target.reset();
+        });
+
+        // number counter
+        const statNumbers = document.querySelectorAll('.stat-number');
+        let counted = false;
+        function startCounting() {
+            if (counted) return;
+            statNumbers.forEach(el => {
+                const target = parseInt(el.getAttribute('data-target'));
+                if (isNaN(target)) return;
+                let current = 0;
+                const increment = Math.ceil(target/80);
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        el.innerText = target + (el.id === 'statPatients' ? "+" : "");
+                        clearInterval(timer);
+                    } else {
+                        el.innerText = current ;
+                    }
+                }, 20);
+            });
+            counted = true;
+        }
+
+        const aboutSection = document.querySelector('#about');
+        const countObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    startCounting();
+                    countObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+        if (aboutSection) countObserver.observe(aboutSection);
+    </script>
+</body>
+</html>
